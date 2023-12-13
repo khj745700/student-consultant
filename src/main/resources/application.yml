@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/student-consulting?serverTimezone=Asia/Seoul
+    username: root
+    password:
+
+  jpa:
+    show-sql: true
+    open-in-view: false # 기본적으로 enabled(true)가 default로 설정됩니다.
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        highlight_sql: true #sql문에 예약어를 밝게 표시해줍니다.
+        format_sql: true #sql문의 들여쓰기 형색을 지켜줍니다.
+
+
+
+
+
+# 시크릿들은 원래는 분리해야하나, 괴제 수준이기에 이부분은 생략하겠습니다.
