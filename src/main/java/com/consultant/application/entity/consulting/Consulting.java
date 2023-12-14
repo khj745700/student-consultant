@@ -39,4 +39,12 @@ public class Consulting extends BaseEntity {
     @JoinColumn(name = "consultant_id", nullable = false)
     private Staff consultant;
 
+
+    public void assignManager(Staff manager) {
+        this.manager = manager;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
 }
