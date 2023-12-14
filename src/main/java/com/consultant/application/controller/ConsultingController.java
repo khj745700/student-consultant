@@ -50,8 +50,10 @@ public class ConsultingController {
 
     @GetMapping("")
     public ResponseEntity<Object> consultingList(@RequestParam String consultantId, @RequestParam String managerId, @RequestParam Boolean isReading,
-                                                 @RequestParam Boolean isFeedback, @RequestParam Boolean consultingDateAsc, Pageable pageable) {
-        Page<Consulting> consultingPage = findConsultingService.findConsultingPage(consultantId, managerId, isReading, isFeedback, consultingDateAsc, pageable);
+                                                 @RequestParam Boolean isFeedback, @RequestParam Boolean consultingDateAsc, @RequestParam Integer page, @RequestParam Integer size) {
+        int pageNum = page != null ? page : 0;
+        int sizeNum = size != null ? size : 20;
+        Page<Consulting> consultingPage = findConsultingService.findConsultingPage(consultantId, managerId, isReading, isFeedback, consultingDateAsc, PageRequest.of(pageNum, sizeNum));
         return ResponseEntity.ok(consultingPage);
     }
 
