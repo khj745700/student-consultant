@@ -7,6 +7,8 @@ import com.consultant.application.exception.ErrorConstant;
 import com.consultant.application.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
@@ -26,6 +28,10 @@ public class ConsultingDao {
      */
     public Consulting findByIdWithFetchJoinAllProperties(Long id) {
         return consultingRepository.findByIdWithFetchJoinAllProperties(id).orElseThrow(ExceptionHandler.notFound(id));
+    }
+
+    public Page<Consulting> findConsultingPagination(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable){
+        return consultingRepository.findConsultingList(consultantId, managerId, isReading, isFeedback, consultingDateAsc, pageable);
     }
 
     private static class ExceptionHandler {

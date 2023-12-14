@@ -10,6 +10,8 @@ import com.consultant.application.service.consulting.ModifyConsultingService;
 import com.consultant.application.service.consulting.RegisterConsultingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,11 +40,18 @@ public class ConsultingController {
         return ResponseEntity.ok(consultingModifyResponse);
     }
 
-    
+
     @GetMapping("/{consultingId}/{managerId}")
     public ResponseEntity<Object> consultDetails(@PathVariable("consultingId")Long consultingId, @PathVariable("managerId") String managerId ) {
         ConsultingModifyResponse consultingModifyResponse = ConsultingModifyResponse.of(findConsultingService.findConsulting(consultingId, managerId));
         return ResponseEntity.ok(consultingModifyResponse);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Object> consultingList(@RequestParam String consultantId, @RequestParam String managerId, @RequestParam Boolean isReading,
+                                                 @RequestParam Boolean isFeedback, @RequestParam Boolean consultingDateAsc, Pageable pageable) {
+        Page<Consulting> consultingPage = findConsultingService.findConsultingPage(consultantId, managerId, isReading, isFeedback, consultingDateAsc, pageable);
+        return ResponseEntity.ok(consultingPage);
     }
 
 }
