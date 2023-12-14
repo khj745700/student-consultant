@@ -5,6 +5,7 @@ import com.consultant.application.dto.request.ConsultingRegisterRequest;
 import com.consultant.application.dto.response.ConsultingModifyResponse;
 import com.consultant.application.dto.response.ConsultingRegisterResponse;
 import com.consultant.application.entity.consulting.Consulting;
+import com.consultant.application.service.consulting.FindConsultingService;
 import com.consultant.application.service.consulting.ModifyConsultingService;
 import com.consultant.application.service.consulting.RegisterConsultingService;
 import jakarta.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class ConsultingController {
     private final RegisterConsultingService registerConsultingService;
     private final ModifyConsultingService modifyConsultingService;
+    private final FindConsultingService findConsultingService;
 
     @PostMapping("")
     public ResponseEntity<Object> saveConsulting(@RequestBody @Valid ConsultingRegisterRequest request) {
@@ -33,6 +35,13 @@ public class ConsultingController {
     public ResponseEntity<Object> consultingModify(@RequestBody @Valid ConsultingModifyRequest request) {
         Consulting consulting = modifyConsultingService.modifyConsulting(request);
         ConsultingModifyResponse consultingModifyResponse = ConsultingModifyResponse.of(consulting);
+        return ResponseEntity.ok(consultingModifyResponse);
+    }
+
+    
+    @GetMapping("/{consultingId}/{managerId}")
+    public ResponseEntity<Object> consultDetails(@PathVariable("consultingId")Long consultingId, @PathVariable("managerId") String managerId ) {
+        ConsultingModifyResponse consultingModifyResponse = ConsultingModifyResponse.of(findConsultingService.findConsulting(consultingId, managerId));
         return ResponseEntity.ok(consultingModifyResponse);
     }
 
