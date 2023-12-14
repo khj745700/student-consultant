@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Validated
 @RequiredArgsConstructor
-@RestController("/api/consulting")
+@RestController
+@RequestMapping("/api/consulting")
 public class ConsultingController {
     private final RegisterConsultingService registerConsultingService;
     private final ModifyConsultingService modifyConsultingService;
