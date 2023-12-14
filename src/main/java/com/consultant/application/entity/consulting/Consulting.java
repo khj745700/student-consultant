@@ -47,4 +47,8 @@ public class Consulting extends BaseEntity {
     public void setFeedback(String feedback) {
         this.feedback = feedback;
     }
+
+    public void read() {
+       isReading = true;
+    }
 }
