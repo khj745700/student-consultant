@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     static class ExceptionResponse extends ResponseEntity<Object> {
 
         private ExceptionResponse(ErrorConstant errorConstant) {
-            super("message : " + errorConstant, errorConstant.getHttpStatus());
+            super("message : " + errorConstant.getMessage(), errorConstant.getHttpStatus());
         }
 
         private static ResponseEntity<Object> toResponseEntity(ErrorConstant errorConstant) {
