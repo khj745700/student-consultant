@@ -6,7 +6,7 @@ spring:
     password:
 
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: false # 기본적으로 enabled(true)가 default로 설정됩니다.
     hibernate:
       ddl-auto: none
