@@ -11,7 +11,7 @@
 # installation and run
 ``` bash
 ./gradlew build -x test
-java -jar ./build/libs/application-0.0.1-SNAPSHOT.jar
+java -jar ./build/libs/application-1.0.1-SNAPSHOT.jar
 ```
 
 # DB DDL
