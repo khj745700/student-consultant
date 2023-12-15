@@ -62,3 +62,9 @@ alter table consulting
   references student (id);
 ```
 
+# API Spec Docs
+After installing and running,
+``` bash
+http://localhost:8080/swagger-ui/index.html
+
+```
