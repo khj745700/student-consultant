@@ -27,6 +27,7 @@ public class CustomConsultingRepositoryImpl implements CustomConsultingRepositor
         QConsulting consulting = QConsulting.consulting;
 
         JPAQuery<Consulting> consultingJPAQuery = jpaQueryFactory.select(consulting)
+                .from(consulting)
                 .where(eqConsultantId(consultantId), eqManagerId(managerId), eqIsRead(isReading), eqIsFeedback(isFeedback))
                 .orderBy(orderByAsc(consultingDateAsc)).offset(pageable.getOffset()).limit(pageable.getPageSize());
 
@@ -39,9 +40,10 @@ public class CustomConsultingRepositoryImpl implements CustomConsultingRepositor
         QConsulting consulting = QConsulting.consulting;
 
         JPAQuery<Long> countTotalQuery = jpaQueryFactory.select(consulting.count())
+                .from(consulting)
                 .where(eqConsultantId(consultantId), eqManagerId(managerId), eqIsRead(isReading), eqIsFeedback(isFeedback));
 
-        return countTotalQuery.fetchFirst();
+        return countTotalQuery.fetchOne();
 
     }
 
