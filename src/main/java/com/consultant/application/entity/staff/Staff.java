@@ -19,7 +19,7 @@ public class Staff extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StaffSort sort;
 
