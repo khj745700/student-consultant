@@ -2,8 +2,8 @@ package com.consultant.application.controller;
 
 import com.consultant.application.dto.request.ConsultingModifyRequest;
 import com.consultant.application.dto.request.ConsultingRegisterRequest;
-import com.consultant.application.dto.response.ConsultingModifyResponse;
-import com.consultant.application.dto.response.ConsultingRegisterResponse;
+import com.consultant.application.dto.response.ConsultingPages;
+import com.consultant.application.dto.response.ConsultingResponse;
 import com.consultant.application.entity.consulting.Consulting;
 import com.consultant.application.service.consulting.FindConsultingService;
 import com.consultant.application.service.consulting.ModifyConsultingService;
@@ -30,15 +30,15 @@ public class ConsultingController {
     @PostMapping("")
     public ResponseEntity<Object> saveConsulting(@RequestBody @Valid ConsultingRegisterRequest request) {
         Consulting consulting = registerConsultingService.registerConsulting(request);
-        ConsultingRegisterResponse consultingRegisterResponse = ConsultingRegisterResponse.of(consulting);
-        return ResponseEntity.status(HttpStatus.CREATED).body(consultingRegisterResponse);
+        ConsultingResponse response = ConsultingResponse.of(consulting);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("")
     public ResponseEntity<Object> consultingModify(@RequestBody @Valid ConsultingModifyRequest request) {
         Consulting consulting = modifyConsultingService.modifyConsulting(request);
-        ConsultingModifyResponse consultingModifyResponse = ConsultingModifyResponse.of(consulting);
-        return ResponseEntity.ok(consultingModifyResponse);
+        ConsultingResponse consultingResponse = ConsultingResponse.of(consulting);
+        return ResponseEntity.ok(consultingResponse);
     }
 
 
@@ -49,11 +49,20 @@ public class ConsultingController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> consultingList(@RequestParam String consultantId, @RequestParam String managerId, @RequestParam Boolean isReading,
-                                                 @RequestParam Boolean isFeedback, @RequestParam Boolean consultingDateAsc, @RequestParam Integer page, @RequestParam Integer size) {
+    @Operation(summary = "상담 목록 조회 API", description = "필터 및 정렬 기능이 적용된 상담 목록 조회 API")
+    @ApiResponses(value =  {
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = ConsultingPages.class)))
+    })
+    public ResponseEntity<Object> consultingList(@RequestParam @Schema(description = "상담자 ID", example = "abcd1234") String consultantId,
+                                                 @RequestParam @Schema(description = "담당자 ID", example = "abcd1234") String managerId,
+                                                 @RequestParam @Schema(description = "담당자 읽음 여부", example = "true") Boolean isReading,
+                                                 @RequestParam @Schema(description = "피드백 내용 유무 여부", example = "true") Boolean isFeedback,
+                                                 @RequestParam @Schema(description = "상담일시 오름차순 여부, default : false", example = "false") Boolean consultingDateAsc,
+                                                 @RequestParam @Schema(description = "페이지 번호, default : 0", example = "0") Integer page,
+                                                 @RequestParam @Schema(description = "페이지 내 요소 개수, default : 20", example = "20") Integer size) {
         int pageNum = page != null ? page : 0;
         int sizeNum = size != null ? size : 20;
-        Page<Consulting> consultingPage = findConsultingService.findConsultingPage(consultantId, managerId, isReading, isFeedback, consultingDateAsc, PageRequest.of(pageNum, sizeNum));
+        Page<?> consultingPage = findConsultingService.findConsultingPage(consultantId, managerId, isReading, isFeedback, consultingDateAsc, PageRequest.of(pageNum, sizeNum));
         return ResponseEntity.ok(consultingPage);
     }
 

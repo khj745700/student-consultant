@@ -1,5 +1,6 @@
 package com.consultant.application.entity.consulting;
 
+import com.consultant.application.dto.response.ConsultingPages;
 import com.consultant.application.entity.staff.QStaff;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -9,7 +10,6 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +23,7 @@ public class CustomConsultingRepositoryImpl implements CustomConsultingRepositor
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<Consulting> findConsultingList(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable) {
+    public Page<?> findConsultingList(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable) {
         QConsulting consulting = QConsulting.consulting;
 
         JPAQuery<Consulting> consultingJPAQuery = jpaQueryFactory.select(consulting)
@@ -32,7 +32,7 @@ public class CustomConsultingRepositoryImpl implements CustomConsultingRepositor
 
         Long elementsNum = countElements(consultantId, managerId, isReading, isFeedback);
 
-        return new PageImpl<>(consultingJPAQuery.fetch(), pageable, elementsNum);
+        return new ConsultingPages(consultingJPAQuery.fetch(), pageable, elementsNum);
     }
 
     private Long countElements(String consultantId, String managerId, Boolean isReading, Boolean isFeedback) {

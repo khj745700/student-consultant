@@ -30,7 +30,7 @@ public class ConsultingDao {
         return consultingRepository.findByIdWithFetchJoinAllProperties(id).orElseThrow(ExceptionHandler.notFound(id));
     }
 
-    public Page<Consulting> findConsultingPagination(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable){
+    public Page<?> findConsultingPagination(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable){
         return consultingRepository.findConsultingList(consultantId, managerId, isReading, isFeedback, consultingDateAsc, pageable);
     }
 
