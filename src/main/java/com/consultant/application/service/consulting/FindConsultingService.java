@@ -8,5 +8,5 @@ import org.springframework.data.domain.Pageable;
 public interface FindConsultingService {
     Consulting findConsulting(Long consultingId, String managerId);
 
-    Page<Consulting> findConsultingPage(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable);
+    Page<?> findConsultingPage(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable);
 }

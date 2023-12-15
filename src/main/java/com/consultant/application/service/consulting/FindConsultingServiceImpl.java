@@ -23,7 +23,7 @@ public class FindConsultingServiceImpl implements FindConsultingService{
     }
 
     @Override
-    public Page<Consulting> findConsultingPage(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable) {
+    public Page<?> findConsultingPage(String consultantId, String managerId, Boolean isReading, Boolean isFeedback, Boolean consultingDateAsc, Pageable pageable) {
         return consultingDao.findConsultingPagination(consultantId, managerId, isReading, isFeedback, consultingDateAsc, pageable);
     }
 }
