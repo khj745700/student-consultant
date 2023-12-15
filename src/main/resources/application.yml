@@ -6,10 +6,10 @@ spring:
     password:
 
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: false # 기본적으로 enabled(true)가 default로 설정됩니다.
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         highlight_sql: true #sql문에 예약어를 밝게 표시해줍니다.
