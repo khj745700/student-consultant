@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface ConsultingRepository extends JpaRepository<Consulting, Long>, CustomConsultingRepository {
 
     @Query("SELECT c FROM Consulting c " +
-            "JOIN FETCH c.manager " +
-            "JOIN FETCH c.student " +
-            "JOIN FETCH c.consultant " +
+            "LEFT JOIN FETCH c.manager " +
+            "LEFT JOIN FETCH c.student " +
+            "LEFT JOIN FETCH c.consultant " +
             "WHERE c.id = :id")
     Optional<Consulting> findByIdWithFetchJoinAllProperties(@Param(value = "id") Long id);
 }
