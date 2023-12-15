@@ -38,7 +38,7 @@ public class ConsultingController {
     @Operation(summary = "상담 등록 API", description = " 학생과 상담원 간의 상담 정보를 등록하는 API")
     @ApiResponses(value =  {
             @ApiResponse(responseCode = "201", description = "생성됨", content = @Content(schema = @Schema(implementation = ConsultingResponse.class))),
-            @ApiResponse(responseCode = "400", description = "파라미터가 정상적으로 입력되지 않은 경우", content = @Content(schema = @Schema(example = "{\n\t\"message\" : \"값이 유효하지 않습니다. (???는 필수 입력입니다.)\"\n}"))),
+            @ApiResponse(responseCode = "400", description = "파라미터가 정상적으로 입력되지 않은 경우", content = @Content(schema = @Schema(example = "{\n\t\"message\" : \"???를 입력해주세요.\"\n}"))),
             @ApiResponse(responseCode = "404", description = "학생이 존재하지 않는 경우", content = @Content(schema = @Schema(example = "{\n\t\"message\" : \"학생을 찾을 수 없습니다.\"\n}"))),
             @ApiResponse(responseCode = "404 ", description = "학생이 퇴원한 경우", content = @Content(schema = @Schema(example = "{\n\t\"message\" : \"퇴원한 학생입니다.\"\n}"))),
             @ApiResponse(responseCode = "404  ", description = "직원이 존재하지 않는 경우", content = @Content(schema = @Schema(example = "{\n\t\"message\" : \"직원을 찾을 수 없습니다.\"\n}"))),
@@ -88,13 +88,13 @@ public class ConsultingController {
     @ApiResponses(value =  {
             @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = ConsultingPages.class)))
     })
-    public ResponseEntity<Object> consultingList(@RequestParam @Schema(description = "상담자 ID", example = "abcd1234") String consultantId,
-                                                 @RequestParam @Schema(description = "담당자 ID", example = "abcd1234") String managerId,
-                                                 @RequestParam @Schema(description = "담당자 읽음 여부", example = "true") Boolean isReading,
-                                                 @RequestParam @Schema(description = "피드백 내용 유무 여부", example = "true") Boolean isFeedback,
-                                                 @RequestParam @Schema(description = "상담일시 오름차순 여부, default : false", example = "false") Boolean consultingDateAsc,
-                                                 @RequestParam @Schema(description = "페이지 번호, default : 0", example = "0") Integer page,
-                                                 @RequestParam @Schema(description = "페이지 내 요소 개수, default : 20", example = "20") Integer size) {
+    public ResponseEntity<Object> consultingList(@RequestParam(required = false) @Schema(description = "상담자 ID", example = "abcd1234") String consultantId,
+                                                 @RequestParam(required = false) @Schema(description = "담당자 ID", example = "abcd1234") String managerId,
+                                                 @RequestParam(required = false) @Schema(description = "담당자 읽음 여부", example = "true") Boolean isReading,
+                                                 @RequestParam(required = false) @Schema(description = "피드백 내용 유무 여부", example = "true") Boolean isFeedback,
+                                                 @RequestParam(required = false) @Schema(description = "상담일시 오름차순 여부, default : false", example = "false") Boolean consultingDateAsc,
+                                                 @RequestParam(required = false) @Schema(description = "페이지 번호, default : 0", example = "0") Integer page,
+                                                 @RequestParam(required = false) @Schema(description = "페이지 내 요소 개수, default : 20", example = "20") Integer size) {
         int pageNum = page != null ? page : 0;
         int sizeNum = size != null ? size : 20;
         Page<?> consultingPage = findConsultingService.findConsultingPage(consultantId, managerId, isReading, isFeedback, consultingDateAsc, PageRequest.of(pageNum, sizeNum));
