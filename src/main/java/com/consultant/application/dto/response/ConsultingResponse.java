@@ -28,6 +28,9 @@ public class ConsultingResponse {
     @Schema(description = "피드백", example = "진행하시면 될 것 같습니다.")
     private String feedback;
 
+    @Schema(description = "읽음여부", example = "true")
+    private Boolean isReading;
+
     @Schema(description = "상담일시", example = "2023-12-15T00:18:39.098")
     private LocalDateTime consultingDate;
 
@@ -39,11 +42,12 @@ public class ConsultingResponse {
         return ConsultingResponse.builder()
                 .consultantId(consulting.getConsultant().getId())
                 .studentId(consulting.getStudent().getId())
-                .managerId(consulting.getManager().getId())
+                .managerId(consulting.getManager() != null ? consulting.getManager().getId() : null)
                 .description(consulting.getDescription())
                 .feedback(consulting.getFeedback())
                 .consultingDate(consulting.getCreatedAt())
                 .modifiedAt(consulting.getModifiedAt())
+                .isReading(consulting.isReading())
                 .build();
     }
 }
